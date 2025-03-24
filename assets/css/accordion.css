@@ -1,0 +1,115 @@
+.glossary-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.glossary-title {
+    flex: 0 0 30%;
+    margin-bottom: 0;
+    font-size: 24px;
+    color: #111111;
+    font-weight: 800;
+    margin-top: 12px;
+}
+
+.accordion-section {
+    flex: 0 0 70%;
+}
+
+.accordion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+ 
+}
+
+.accordion-item {
+    border-bottom: 1px solid #eee;
+}
+
+.accordion-header {
+    padding: 15px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header h3 {
+
+    font-weight: 500;
+    color: #333;
+    margin: 0; 
+    font-family: "Roboto", sans-serif;
+    color: #506172;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.accordion-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+    padding-bottom: 16px;
+}
+
+.accordion-content.active {
+    margin-bottom: 16px; 
+}
+
+.accordion-content li, p {
+    padding: 0 0 4px 0; 
+    color: #464d65; 
+    list-style-type: disc; 
+}
+
+
+.accordion-header::after {
+    content: '▼';
+    font-size: 10px;
+    color: #506172;
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active::after {
+    transform: rotate(180deg);
+}
+
+.accordion-a-section {
+    flex: 0 0 100%;  /* Changed from 70% to 100% */
+    width: 100%;     /* Added to ensure full width */
+}
+
+.accordion-a-grid {
+    display: block;  /* Changed from grid to block */
+    width: 100%;     /* Added to ensure full width */
+}
+
+.accordion-a-item {
+    border-bottom: 1px solid #eee;
+    width: 100%;     /* Added to ensure full width */
+    margin-bottom: 16px;
+}
+
+.accordion-content:not(.active) {
+    padding-bottom: 0;
+}
+
+.accordion-content.active {
+    padding-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+
+    .glossary-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .accordion-grid {
+        grid-template-columns: 1fr;
+    }
+}
