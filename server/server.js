@@ -10,7 +10,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Configure Gmail SMTP
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -32,12 +31,10 @@ app.post("/send-email", async (req, res) => {
             recaptchaResponse 
         } = req.body;
 
-        // Verify reCAPTCHA
         if (!recaptchaResponse) {
             return res.status(400).json({ message: "Please complete the reCAPTCHA verification" });
         }
 
-        // Verify with Google's reCAPTCHA API
         const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
         const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptchaResponse}`;
         
