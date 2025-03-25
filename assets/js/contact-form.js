@@ -64,26 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     messageDiv.style.fontWeight = "bold";
     submitButton.parentNode.appendChild(messageDiv);
 
-    // Debugging function to log select element states
-    function logSelectState(selectElement, label) {
-        console.log(`${label} - Current State:`, {
-            selectedIndex: selectElement.selectedIndex,
-            value: selectElement.value,
-            options: Array.from(selectElement.options).map((opt, idx) => ({
-                index: idx,
-                value: opt.value,
-                text: opt.text,
-                selected: opt.selected
-            }))
-        });
-    }
-
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
-
-        // Debugging: Log initial state before submission
-        logSelectState(appointmentReasonSelect, "Appointment Reason Before Submit");
-        logSelectState(firstTimeClientSelect, "First Time Client Before Submit");
 
         submitButton.disabled = true;
         submitButton.innerHTML = `<span class="spinner"></span> Submitting...`;
@@ -101,41 +83,34 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                // More robust dropdown reset method
-                function resetDropdown(selectElement) {
-                    // Try multiple methods to reset
-                    try {
-                        // Method 1: Set to default value
-                        const defaultOption = Array.from(selectElement.options).find(
-                            opt => opt.value === "default" || opt.value === ""
-                        );
-                        
-                        if (defaultOption) {
-                            selectElement.value = defaultOption.value;
-                        } else if (selectElement.options.length > 0) {
-                            // Method 2: Fall back to first option
-                            selectElement.selectedIndex = 0;
-                        }
+                // Force reset dropdowns using multiple methods
+                function forceResetDropdown(selectElement) {
+                    // Method 1: Direct value setting
+                    selectElement.value = "default";
 
-                        // Force trigger change event
-                        const event = new Event('change', { bubbles: true });
-                        selectElement.dispatchEvent(event);
-                    } catch (error) {
-                        console.error("Error resetting dropdown:", error);
+                    // Method 2: Programmatic selection
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        if (selectElement.options[i].value === "default") {
+                            selectElement.selectedIndex = i;
+                            break;
+                        }
                     }
+
+                    // Method 3: Dispatch events to trigger any listeners
+                    const changeEvent = new Event('change', { bubbles: true });
+                    const inputEvent = new Event('input', { bubbles: true });
+                    selectElement.dispatchEvent(changeEvent);
+                    selectElement.dispatchEvent(inputEvent);
                 }
 
                 // Reset both dropdowns
-                resetDropdown(appointmentReasonSelect);
-                resetDropdown(firstTimeClientSelect);
-
-                // Debugging: Log state after reset
-                logSelectState(appointmentReasonSelect, "Appointment Reason After Reset");
-                logSelectState(firstTimeClientSelect, "First Time Client After Reset");
+                forceResetDropdown(appointmentReasonSelect);
+                forceResetDropdown(firstTimeClientSelect);
 
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
+                // Additional reset methods
                 form.reset();
                 grecaptcha.reset();
 
