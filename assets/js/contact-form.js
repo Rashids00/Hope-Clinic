@@ -123,16 +123,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                messageDiv.textContent = "Email sent successfully!";
+                messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
                 form.reset();
                 grecaptcha.reset();
 
-                document.getElementById("appointmentReason").value = "";
-                document.getElementById("firstTimeClient").value = "";
+                document.querySelector("#appointmentReason option:first-child").selected = true;
+                document.querySelector("#firstTimeClient option:first-child").selected = true;
+
             } else {
-                messageDiv.textContent = result.message || "Failed to send email";
+                messageDiv.textContent = result.message || "Failed to send request";
                 messageDiv.style.color = "#dc3545";
             }
         } catch (error) {
