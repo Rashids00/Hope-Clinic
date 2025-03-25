@@ -88,28 +88,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
+
             form.reset();
-            console.log("Form reset called");
+console.log("Form reset called");
 
-            // Manually reset the dropdowns
-            const appointmentDropdown = document.getElementById("appointmentReason");
-                const firstTimeClientDropdown = document.getElementById("firstTimeClient");
+// Reset dropdowns manually
+const appointmentDropdown = document.getElementById("appointmentReason");
+const firstTimeClientDropdown = document.getElementById("firstTimeClient");
 
-                if (appointmentDropdown) {
-                    console.log("Before Reset:", appointmentDropdown.value);
-                    appointmentDropdown.selectedIndex = 0; // Reset to first option
-                    console.log("After Reset:", appointmentDropdown.value);
-                }
+if (appointmentDropdown) {
+    console.log("Before Reset:", appointmentDropdown.value);
+    setTimeout(() => {
+        appointmentDropdown.selectedIndex = 0; // Reset after a small delay
+        console.log("After Reset:", appointmentDropdown.value);
+    }, 0);
+}
 
-                if (firstTimeClientDropdown) {
-                    console.log("Before Reset:", firstTimeClientDropdown.value);
-                    firstTimeClientDropdown.selectedIndex = 0; // Reset to first option
-                    console.log("After Reset:", firstTimeClientDropdown.value);
-                }
+if (firstTimeClientDropdown) {
+    console.log("Before Reset:", firstTimeClientDropdown.value);
+    setTimeout(() => {
+        firstTimeClientDropdown.selectedIndex = 0; // Reset after a small delay
+        console.log("After Reset:", firstTimeClientDropdown.value);
+    }, 0);
+}
 
-            // Reset reCAPTCHA
-            grecaptcha.reset();
-            console.log("reCAPTCHA reset");
+// Reset reCAPTCHA
+grecaptcha.reset();
+console.log("reCAPTCHA reset");
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
                 messageDiv.style.color = "#dc3545";
