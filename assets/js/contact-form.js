@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("recaptchaResponse", grecaptcha.getResponse());
 
         try {
-            const response = await fetch("http://hope-clinic.onrender.com/send-email", {
+            const response = await fetch("https://hope-clinic.onrender.com/send-email", {
                 method: "POST",
                 body: JSON.stringify(Object.fromEntries(formData)),
                 headers: {
