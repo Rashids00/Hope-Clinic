@@ -97,12 +97,28 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("serviceRequestForm");
     const submitButton = form.querySelector(".submit-btn");
+    const appointmentReasonSelect = document.getElementById("appointmentReason");
+    const firstTimeClientSelect = document.getElementById("firstTimeClient");
 
     const messageDiv = document.createElement("div");
     messageDiv.style.display = "none";
     messageDiv.style.marginTop = "10px";
     messageDiv.style.fontWeight = "bold";
     submitButton.parentNode.appendChild(messageDiv);
+
+    // Function to manually reset dropdowns
+    function resetDropdowns() {
+        // Find the first option (the disabled placeholder)
+        const appointmentReasonFirstOption = appointmentReasonSelect.querySelector('option[disabled]');
+        const firstTimeClientFirstOption = firstTimeClientSelect.querySelector('option[disabled]');
+
+        if (appointmentReasonFirstOption) {
+            appointmentReasonFirstOption.selected = true;
+        }
+        if (firstTimeClientFirstOption) {
+            firstTimeClientFirstOption.selected = true;
+        }
+    }
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -126,11 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                appointmentReasonSelect.value = "";
-                firstTimeClientSelect.value = "";
-                
-                form.reset();
-
+                // Comprehensive reset approach
+                form.reset();  // Standard form reset
+                resetDropdowns();  // Custom dropdown reset
                 grecaptcha.reset();
 
             } else {
@@ -138,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.style.color = "#dc3545";
             }
         } catch (error) {
+            console.error("Submission error:", error);
             messageDiv.textContent = "Error sending request. Try again.";
             messageDiv.style.color = "#dc3545";
         } finally {
