@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("serviceRequestForm");
     const submitButton = form.querySelector(".submit-btn");
+    const appointmentReasonSelect = document.getElementById("appointmentReason");
+    const firstTimeClientSelect = document.getElementById("firstTimeClient");
 
     const messageDiv = document.createElement("div");
     messageDiv.style.display = "none";
@@ -27,11 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                window.location.reload();
+                appointmentReasonSelect.value = "default";
+                firstTimeClientSelect.value = "default";
+
+                form.reset();
+                grecaptcha.reset();
 
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
