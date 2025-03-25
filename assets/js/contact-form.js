@@ -109,8 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to manually reset dropdowns
     function resetDropdowns() {
         // Find the first option (the disabled placeholder)
-        const appointmentReasonFirstOption = appointmentReasonSelect.querySelector('option[disabled]');
-        const firstTimeClientFirstOption = firstTimeClientSelect.querySelector('option[disabled]');
+        const appointmentReasonFirstOption = appointmentReason.querySelector('option[disabled]');
+        const firstTimeClientFirstOption = firstTimeClient.querySelector('option[disabled]');
 
         if (appointmentReasonFirstOption) {
             appointmentReasonFirstOption.selected = true;
