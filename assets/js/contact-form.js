@@ -1,27 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("serviceRequestForm");
     const submitButton = form.querySelector(".submit-btn");
-    const appointmentReasonSelect = document.getElementById("appointmentReason");
-    const firstTimeClientSelect = document.getElementById("firstTimeClient");
 
     const messageDiv = document.createElement("div");
     messageDiv.style.display = "none";
     messageDiv.style.marginTop = "10px";
     messageDiv.style.fontWeight = "bold";
     submitButton.parentNode.appendChild(messageDiv);
-
-    function resetDropdowns() {
-        // Find the first option (the disabled placeholder)
-        const appointmentReasonFirstOption = appointmentReasonSelect.querySelector('option[disabled]');
-        const firstTimeClientFirstOption = firstTimeClientSelect.querySelector('option[disabled]');
-
-        if (appointmentReasonFirstOption) {
-            appointmentReasonFirstOption.selected = true;
-        }
-        if (firstTimeClientFirstOption) {
-            firstTimeClientFirstOption.selected = true;
-        }
-    }
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -42,13 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
+                window.location.reload();
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                resetDropdowns();
-
-                form.reset();
-                grecaptcha.reset();
 
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
