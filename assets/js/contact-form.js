@@ -126,11 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                form.reset();
-                grecaptcha.reset();
+                // More reliable way to reset form and dropdowns
+                form.reset(); // This resets most form elements
+                
+                // Explicitly reset dropdowns to first disabled option
+                document.getElementById("appointmentReason").selectedIndex = 0;
+                document.getElementById("firstTimeClient").selectedIndex = 0;
 
-                document.querySelector("#appointmentReason option:first-child").selected = true;
-                document.querySelector("#firstTimeClient option:first-child").selected = true;
+                grecaptcha.reset();
 
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
@@ -140,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
             messageDiv.textContent = "Error sending request. Try again.";
             messageDiv.style.color = "#dc3545";
         } finally {
-
             submitButton.innerHTML = "Submit";
             submitButton.disabled = false;
             messageDiv.style.display = "block";
