@@ -10,6 +10,19 @@ document.addEventListener("DOMContentLoaded", function () {
     messageDiv.style.fontWeight = "bold";
     submitButton.parentNode.appendChild(messageDiv);
 
+    function resetDropdowns() {
+        // Find the first option (the disabled placeholder)
+        const appointmentReasonFirstOption = appointmentReasonSelect.querySelector('option[disabled]');
+        const firstTimeClientFirstOption = firstTimeClientSelect.querySelector('option[disabled]');
+
+        if (appointmentReasonFirstOption) {
+            appointmentReasonFirstOption.selected = true;
+        }
+        if (firstTimeClientFirstOption) {
+            firstTimeClientFirstOption.selected = true;
+        }
+    }
+
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -32,8 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                appointmentReasonSelect.selectedIndex = 0;
-                firstTimeClientSelect.selectedIndex = 0;
+                resetDropdowns();
 
                 form.reset();
                 grecaptcha.reset();
