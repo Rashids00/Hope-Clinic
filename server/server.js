@@ -49,7 +49,7 @@ app.post("/send-email", async (req, res) => {
         const mailOptions = {
             from: email,
             replyTo: email,
-            to: `decodefactory@gmail.com`,
+            to: `rashids2435@gmail.com`,
             subject: `Service request by ${firstName} from Hope Animal Clinic`,
             text: `
                 Name: ${fullName}
