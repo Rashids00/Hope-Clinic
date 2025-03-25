@@ -85,14 +85,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                // Explicitly reset dropdowns to first option
-                if (appointmentReasonSelect.options.length > 0) {
-                    appointmentReasonSelect.selectedIndex = 0;
-                }
-                
-                if (firstTimeClientSelect.options.length > 0) {
-                    firstTimeClientSelect.selectedIndex = 0;
-                }
+                // Specifically reset dropdowns to default disabled option
+                appointmentReasonSelect.querySelector('option[value="default"]').selected = true;
+                firstTimeClientSelect.querySelector('option[value="default"]').selected = true;
 
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
