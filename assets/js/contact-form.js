@@ -39,58 +39,62 @@
 //     });
 // });
 
-$(document).ready(function () {
-    $("#serviceRequestForm").submit(function (event) {
-        event.preventDefault(); // Prevent default form submission
-        
-        // Verify reCAPTCHA was completed
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse) {
-            showMessage("Please complete the reCAPTCHA verification", "error");
-            return;
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("serviceRequestForm");
+    const submitButton = form.querySelector(".submit-btn");
 
-        // Show loading spinner
-        $(".submit-btn").prop("disabled", true).html('<span class="spinner"></span> Submitting...');
+    // Create a message div
+    const messageDiv = document.createElement("div");
+    messageDiv.style.display = "none"; // Initially hidden
+    messageDiv.style.marginTop = "10px";
+    messageDiv.style.fontWeight = "bold";
+    submitButton.parentNode.appendChild(messageDiv);
 
-        let formData = {
-            firstName: $("#firstName").val(),
-            lastName: $("#lastName").val(),
-            email: $("#email").val(),
-            phone: $("#phone").val(),
-            petName: $("#petName").val(),
-            appointmentReason: $("#appointmentReason").val(),
-            firstTimeClient: $("#firstTimeClient").val(),
-            recaptchaResponse: recaptchaResponse // Add the reCAPTCHA response to form data
-        };
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-        $.ajax({
-            url: "https://hope-clinic.onrender.com/send-email",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
-            success: function () {
-                showMessage("Your request has been submitted successfully!", "success");
-                $("#serviceRequestForm")[0].reset(); // Reset form after submission
-                grecaptcha.reset(); // Reset the reCAPTCHA
-            },
-            error: function () {
-                showMessage("Error submitting form. Please try again.", "error");
-                grecaptcha.reset(); // Reset the reCAPTCHA on error
-            },
-            complete: function () {
-                // Restore button text after submission
-                $(".submit-btn").prop("disabled", false).html("Submit");
+        // Disable button & show spinner
+        submitButton.disabled = true;
+        submitButton.innerHTML = `<span class="spinner"></span> Submitting...`;
+
+        // Collect form data
+        const formData = new FormData(form);
+        formData.append("recaptchaResponse", grecaptcha.getResponse());
+
+        try {
+            const response = await fetch("http://hope-clinic.onrender.com/send-email", {
+                method: "POST",
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                messageDiv.textContent = "Email sent successfully!";
+                messageDiv.style.color = "#28a745";
+                form.reset();
+                grecaptcha.reset();
+            } else {
+                messageDiv.textContent = result.message || "Failed to send email";
+                messageDiv.style.color = "#dc3545";
             }
-        });
+        } catch (error) {
+            messageDiv.textContent = "Error sending request. Try again.";
+            messageDiv.style.color = "#dc3545";
+        } finally {
+            // Reset button & show message
+            submitButton.innerHTML = "Submit";
+            submitButton.disabled = false;
+            messageDiv.style.display = "block";
+
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                messageDiv.style.display = "none";
+            }, 3000);
+        }
     });
-
-    function showMessage(message, type) {
-        const messageContainer = $(".message-container");
-        messageContainer.text(message).removeClass("success error").addClass(type).fadeIn();
-
-        setTimeout(() => {
-            messageContainer.fadeOut();
-        }, 3000);
-    }
 });
+
