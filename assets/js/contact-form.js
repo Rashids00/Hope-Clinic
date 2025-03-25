@@ -93,19 +93,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Manually reset the dropdowns
             const appointmentDropdown = document.getElementById("appointmentReason");
-            const firstTimeClientDropdown = document.getElementById("firstTimeClient");
+                const firstTimeClientDropdown = document.getElementById("firstTimeClient");
 
-            if (appointmentDropdown) {
-                console.log("Before Reset:", appointmentDropdown.value);
-                appointmentDropdown.value = "";
-                console.log("After Reset:", appointmentDropdown.value);
-            }
+                if (appointmentDropdown) {
+                    console.log("Before Reset:", appointmentDropdown.value);
+                    appointmentDropdown.selectedIndex = 0; // Reset to first option
+                    console.log("After Reset:", appointmentDropdown.value);
+                }
 
-            if (firstTimeClientDropdown) {
-                console.log("Before Reset:", firstTimeClientDropdown.value);
-                firstTimeClientDropdown.value = "";
-                console.log("After Reset:", firstTimeClientDropdown.value);
-            }
+                if (firstTimeClientDropdown) {
+                    console.log("Before Reset:", firstTimeClientDropdown.value);
+                    firstTimeClientDropdown.selectedIndex = 0; // Reset to first option
+                    console.log("After Reset:", firstTimeClientDropdown.value);
+                }
 
             // Reset reCAPTCHA
             grecaptcha.reset();
