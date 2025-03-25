@@ -64,7 +64,6 @@ h2 {
 }
 
 .submit-btn:disabled {
-    background-color: #6c757d;
     cursor: not-allowed;
     pointer-events: none;
 }

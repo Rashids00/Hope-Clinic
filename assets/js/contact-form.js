@@ -129,8 +129,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.reset();
                 grecaptcha.reset();
 
-                document.getElementById("appointmentReason").selectedIndex = 0;
-                document.getElementById("firstTimeClient").selectedIndex = 0;
+                document.getElementById("appointmentReason").value = "";
+                document.getElementById("firstTimeClient").value = "";
             } else {
                 messageDiv.textContent = result.message || "Failed to send email";
                 messageDiv.style.color = "#dc3545";
