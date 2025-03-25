@@ -88,33 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
+                form.reset();
+                resetNiceSelect(); 
 
-            form.reset();
-console.log("Form reset called");
-
-// Reset dropdowns manually
-const appointmentDropdown = document.getElementById("appointmentReason");
-const firstTimeClientDropdown = document.getElementById("firstTimeClient");
-
-if (appointmentDropdown) {
-    console.log("Before Reset:", appointmentDropdown.value);
-    setTimeout(() => {
-        appointmentDropdown.selectedIndex = 0; // Reset after a small delay
-        console.log("After Reset:", appointmentDropdown.value);
-    }, 0);
-}
-
-if (firstTimeClientDropdown) {
-    console.log("Before Reset:", firstTimeClientDropdown.value);
-    setTimeout(() => {
-        firstTimeClientDropdown.selectedIndex = 0; // Reset after a small delay
-        console.log("After Reset:", firstTimeClientDropdown.value);
-    }, 0);
-}
-
-// Reset reCAPTCHA
-grecaptcha.reset();
-console.log("reCAPTCHA reset");
+                grecaptcha.reset(); 
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
                 messageDiv.style.color = "#dc3545";
@@ -132,4 +109,11 @@ console.log("reCAPTCHA reset");
             }, 3000);
         }
     });
+
+    function resetNiceSelect() {
+        $("select").each(function () {
+            $(this).val($(this).find("option:first").val()); 
+        });
+        $("select").niceSelect("update"); 
+    }
 });
