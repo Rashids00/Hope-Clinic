@@ -55,6 +55,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("serviceRequestForm");
     const submitButton = form.querySelector(".submit-btn");
+    
+    // Get specific dropdowns
     const appointmentReasonSelect = document.getElementById("appointmentReason");
     const firstTimeClientSelect = document.getElementById("firstTimeClient");
 
@@ -83,34 +85,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                // Force reset dropdowns using multiple methods
-                function forceResetDropdown(selectElement) {
-                    // Method 1: Direct value setting
-                    selectElement.value = "default";
-
-                    // Method 2: Programmatic selection
-                    for (let i = 0; i < selectElement.options.length; i++) {
-                        if (selectElement.options[i].value === "default") {
-                            selectElement.selectedIndex = i;
-                            break;
-                        }
-                    }
-
-                    // Method 3: Dispatch events to trigger any listeners
-                    const changeEvent = new Event('change', { bubbles: true });
-                    const inputEvent = new Event('input', { bubbles: true });
-                    selectElement.dispatchEvent(changeEvent);
-                    selectElement.dispatchEvent(inputEvent);
-                }
-
-                // Reset both dropdowns
-                forceResetDropdown(appointmentReasonSelect);
-                forceResetDropdown(firstTimeClientSelect);
+                // Explicitly reset dropdowns using .value method
+                appointmentReasonSelect.value = "default";
+                firstTimeClientSelect.value = "default";
 
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                // Additional reset methods
                 form.reset();
                 grecaptcha.reset();
 
@@ -133,4 +114,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
