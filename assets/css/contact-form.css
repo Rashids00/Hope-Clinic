@@ -38,14 +38,6 @@ h2 {
 
 }
 
-.reset-btn {
-    padding: 10px 15px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
 .btn-container {
     text-align: center;
 }

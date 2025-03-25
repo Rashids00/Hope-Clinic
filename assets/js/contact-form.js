@@ -31,6 +31,10 @@
 //                 messageDiv.style.color = "#28a745";
 
 //                 form.reset();
+
+//                 document.getElementById("appointmentReason").selectedIndex = 0;
+//                 document.getElementById("firstTimeClient").selectedIndex = 0;
+
 //                 grecaptcha.reset();
 
 //             } else {
@@ -55,10 +59,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("serviceRequestForm");
     const submitButton = form.querySelector(".submit-btn");
-    
-    // Get specific dropdowns
-    const appointmentReasonSelect = document.getElementById("appointmentReason");
-    const firstTimeClientSelect = document.getElementById("firstTimeClient");
 
     const messageDiv = document.createElement("div");
     messageDiv.style.display = "none";
@@ -85,22 +85,35 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                // Specifically reset dropdowns to default disabled option
-                appointmentReasonSelect.querySelector('option[value="default"]').selected = true;
-                firstTimeClientSelect.querySelector('option[value="default"]').selected = true;
-
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
                 form.reset();
-                grecaptcha.reset();
+                console.log("Form reset called");
 
+                // Manually reset the dropdowns
+                const appointmentDropdown = document.getElementById("appointmentReason");
+                const firstTimeClientDropdown = document.getElementById("firstTimeClient");
+
+                console.log("Before Reset:");
+                console.log("Appointment Reason:", appointmentDropdown.value);
+                console.log("First Time Client:", firstTimeClientDropdown.value);
+
+                appointmentDropdown.selectedIndex = 0;
+                firstTimeClientDropdown.selectedIndex = 0;
+
+                console.log("After Reset:");
+                console.log("Appointment Reason:", appointmentDropdown.value);
+                console.log("First Time Client:", firstTimeClientDropdown.value);
+
+                // Reset reCAPTCHA
+                grecaptcha.reset();
+                console.log("reCAPTCHA reset");
             } else {
                 messageDiv.textContent = result.message || "Failed to send request";
                 messageDiv.style.color = "#dc3545";
             }
         } catch (error) {
-            console.error("Submission Error:", error);
             messageDiv.textContent = "Error sending request. Try again.";
             messageDiv.style.color = "#dc3545";
         } finally {
