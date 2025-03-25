@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageDiv = document.createElement("div");
     messageDiv.style.display = "none";
     messageDiv.style.marginTop = "10px";
-    messageDiv.style.fontWeight = "bold";
+    messageDiv.style.fontWeight = "normal";
     submitButton.parentNode.appendChild(messageDiv);
 
     form.addEventListener("submit", async function (event) {
