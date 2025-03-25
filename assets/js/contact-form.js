@@ -126,12 +126,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.textContent = "Request submitted successfully!";
                 messageDiv.style.color = "#28a745";
 
-                // More reliable way to reset form and dropdowns
-                form.reset(); // This resets most form elements
+                appointmentReasonSelect.value = "";
+                firstTimeClientSelect.value = "";
                 
-                // Explicitly reset dropdowns to first disabled option
-                document.getElementById("appointmentReason").selectedIndex = 0;
-                document.getElementById("firstTimeClient").selectedIndex = 0;
+                form.reset();
 
                 grecaptcha.reset();
 
